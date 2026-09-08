@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Active Trader — Portfolio Ledger Tutorial</title>
+<meta name="description" content="Model a high-risk portfolio with stocks and crypto alongside a core — and understand the impact of return rate assumptions.">
+<link rel="icon" type="image/svg+xml" href="../../app/favicon.svg">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">Portfolio Ledger</a>
+    <ul class="nav-links">
+      <li><a href="../index.html">Docs</a></li>
+      <li><a href="index.html" class="active">Tutorial</a></li>
+    </ul>
+    <div class="nav-ctas">
+      <a href="https://github.com/nilays-ns/portfolio-ledger" target="_blank" rel="noopener">GitHub ↗</a>
+      <a href="../../app/index.html" class="nav-cta-primary">Open app ↗</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Toggle navigation">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8">
+        <line x1="2" y1="5" x2="18" y2="5"/>
+        <line x1="2" y1="10" x2="18" y2="10"/>
+        <line x1="2" y1="15" x2="18" y2="15"/>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<div class="page-narrow">
+
+  <div class="breadcrumb">
+    <a href="../index.html">Docs</a>
+    <span>›</span>
+    <a href="index.html">Tutorials</a>
+    <span>›</span>
+    Active trader
+  </div>
+
+  <div class="persona-nav">
+    <a href="fresh-graduate.html">Fresh graduate</a>
+    <a href="mid-career.html">Mid-career</a>
+    <a href="near-retirement.html">Near retirement</a>
+    <a href="foreign-currency.html">Foreign currency</a>
+    <a href="trader.html" class="active">Trader</a>
+    <a href="safe-investor.html">Safe investor</a>
+  </div>
+
+  <span class="card-tag plum">High risk</span>
+  <h1 style="font-family:'Newsreader',serif;font-weight:500;font-size:36px;margin:12px 0 12px;letter-spacing:-0.01em;">Active trader</h1>
+  <p style="font-size:17px;color:var(--ink-soft);margin:0 0 40px;max-width:52ch;">High-conviction bets in stocks and crypto alongside a core portfolio. The calculator can model aggressive return assumptions — but this walkthrough is also about understanding what those assumptions really mean.</p>
+
+  <hr class="rule" style="margin-top:0;">
+
+  <h2 class="doc-heading">Who this is for</h2>
+  <div class="prose">
+    <p>You actively trade individual stocks, hold some crypto, and maintain a core SIP as a "boring" foundation. Your trading portfolio has had strong recent returns and you want to model where it might go — while being honest about the risk.</p>
+    <p>This walkthrough models a mixed portfolio and shows how to use the return rate as a tool for scenario analysis rather than a prediction.</p>
+  </div>
+
+  <h2 class="doc-heading">Starting position</h2>
+  <table class="doc-table">
+    <thead><tr><th>Asset</th><th>Current value</th><th>Return %/yr</th><th>Contrib weight</th></tr></thead>
+    <tbody>
+      <tr><td>SIP / index funds (core)</td><td>₹5,00,000</td><td>12</td><td>40</td></tr>
+      <tr><td>Direct stocks (active)</td><td>₹3,00,000</td><td>18</td><td>35</td></tr>
+      <tr><td>Crypto (Bitcoin + ETH)</td><td>₹1,50,000</td><td>25</td><td>10</td></tr>
+      <tr><td>EPF / PF</td><td>₹2,00,000</td><td>8.2</td><td>15</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="doc-heading">Step-by-step</h2>
+  <ol class="steps">
+    <li>
+      <div class="step-body">
+        <p class="step-title">Enter the portfolio and set monthly investment to ₹30,000</p>
+        <p class="step-desc">Set flat period to 0 (no flat period — step up from year 1). Step up every 3 years. Step-up amount: 20%.</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <p class="step-title">Set milestones to 5, 10, 20</p>
+        <p class="step-desc">Look at the 20-year projection. With 18% on stocks and 25% on crypto, the numbers will look extraordinary. Write them down.</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <p class="step-title">Run the pessimistic scenario</p>
+        <p class="step-desc">Change stocks to 8% (a bad run — roughly flat in real terms) and crypto to 0% (no growth). Observe how dramatically the 20-year total changes. This is the downside scenario.</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <p class="step-title">Run the realistic scenario</p>
+        <p class="step-desc">Set stocks to 14% (achievable with a good stock-picker over 10+ years) and crypto to 15% (conservative for a long-held BTC position). This is your middle-case scenario.</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <p class="step-title">Compare all three — optimistic, realistic, pessimistic</p>
+        <p class="step-desc">Export each scenario with a descriptive filename. The spread between your optimistic and pessimistic scenarios is your risk. If the pessimistic 20-year outcome still meets your retirement goal, you can afford the risk. If it doesn't, reduce the allocation to high-risk assets.</p>
+      </div>
+    </li>
+  </ol>
+
+  <h2 class="doc-heading">What the numbers mean</h2>
+  <div class="prose">
+    <p>The most important takeaway from this exercise is how sensitive high-return assumptions are. A 25% crypto return vs. a 5% crypto return over 20 years is the difference between a transformative outcome and a rounding error — and both are plausible.</p>
+    <p>The calculator models a constant return rate. In reality, high-volatility assets like individual stocks and crypto experience large drawdowns. A 50% drawdown followed by a 100% recovery still results in a 0% net return over that period, even though the mathematical average of −50% and +100% is +25%. This is called volatility drag — and it means the realistic CAGR of a volatile asset is always lower than the average of its annual returns.</p>
+  </div>
+
+  <div class="callout warn">
+    <strong>A note on crypto:</strong> Historical returns for Bitcoin and Ethereum are extraordinary over their short existence. There is no long historical record to base a 20-year CAGR assumption on. Use a wide scenario range (0% to 20%) rather than a single number, and size the position such that the 0% scenario doesn't derail your retirement plan.
+  </div>
+
+  <div class="page-nav">
+    <a href="foreign-currency.html" class="prev">Foreign currency investor</a>
+    <a href="safe-investor.html" class="next">Safe investor</a>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <p>This is a planning tool, not financial advice. &nbsp;·&nbsp; <a href="../../app/index.html">Open the calculator</a> &nbsp;·&nbsp; <a href="https://github.com/nilays-ns/portfolio-ledger" target="_blank" rel="noopener">GitHub</a></p>
+</footer>
+
+<script src="../js/nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Export &amp; Import — Portfolio Ledger Docs</title>
+<meta name="description" content="How to save, reload, and share your Portfolio Ledger plan using the export and import feature.">
+<link rel="icon" type="image/svg+xml" href="../../app/favicon.svg">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">Portfolio Ledger</a>
+    <ul class="nav-links">
+      <li><a href="../index.html" class="active">Docs</a></li>
+      <li><a href="../tutorials/index.html">Tutorial</a></li>
+    </ul>
+    <div class="nav-ctas">
+      <a href="https://github.com/nilays-ns/portfolio-ledger" target="_blank" rel="noopener">GitHub ↗</a>
+      <a href="../../app/index.html" class="nav-cta-primary">Open app ↗</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Toggle navigation">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8">
+        <line x1="2" y1="5" x2="18" y2="5"/>
+        <line x1="2" y1="10" x2="18" y2="10"/>
+        <line x1="2" y1="15" x2="18" y2="15"/>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<div class="page-narrow">
+
+  <div class="breadcrumb">
+    <a href="../index.html">Docs</a>
+    <span>›</span>
+    Export &amp; Import
+  </div>
+
+  <h1 style="font-family:'Newsreader',serif;font-weight:500;font-size:36px;margin:0 0 12px;letter-spacing:-0.01em;">Export &amp; Import</h1>
+  <p style="font-size:17px;color:var(--ink-soft);margin:0 0 48px;max-width:52ch;">Save your plan to a file, reload it later, or hand it to a friend as a starting point.</p>
+
+  <hr class="rule" style="margin-top:0;">
+
+  <h2 class="doc-heading">Exporting your plan</h2>
+  <p class="prose">Click the <strong>Export</strong> button in the top-right of the calculator. Your browser will download a file named <code>portfolio-ledger.json</code>. This file contains your entire plan — all asset rows, all slider values, and the milestone year settings.</p>
+
+  <div class="callout">
+    <strong>Nothing is sent to a server.</strong> The export happens entirely in your browser. The file is written locally and never transmitted anywhere.
+  </div>
+
+  <h2 class="doc-heading">Importing a plan</h2>
+  <p class="prose">Click <strong>Import</strong>, select a <code>.json</code> file previously exported from Portfolio Ledger, and your plan will be restored exactly — all assets, all settings. The current state is replaced immediately on import.</p>
+
+  <h2 class="doc-heading">Use cases</h2>
+  <ul class="prose">
+    <li><strong>Save your work.</strong> Since the calculator has no backend, closing the tab loses your data. Export before you close to save a snapshot you can reload anytime.</li>
+    <li><strong>Version your plan.</strong> Export once a year (or whenever you make a major change) and keep dated copies as a record of how your assumptions evolved.</li>
+    <li><strong>Share a starting point.</strong> Hand someone a pre-filled file with realistic asset classes and return rates so they don't have to start from scratch.</li>
+    <li><strong>Compare scenarios.</strong> Build two plans (aggressive vs. conservative return assumptions), export both, and load them in separate tabs to compare projections.</li>
+  </ul>
+
+  <hr class="rule">
+
+  <h2 class="doc-heading">JSON format</h2>
+  <p class="prose">The exported file is plain JSON. Here is a fully annotated example:</p>
+
+  <pre><code>{
+  "monthly": 25000,        // monthly contribution baseline (number)
+  "flatYears": 5,          // flat period before step-up (integer)
+  "cycleYears": 2,         // step-up cycle in years (integer)
+  "stepUpPct": 10,         // step-up percentage per cycle (number)
+  "inflation": 6,          // inflation rate for real-terms view (number)
+  "milestones": [5, 10, 25], // three milestone years (array of integers)
+  "assets": [
+    {
+      "name": "SIP / mutual funds",  // display label (string)
+      "value": 900000,               // current value in your currency (number)
+      "rate": 12,                    // expected annual return % (number)
+      "contribPct": 45               // contribution weight (number)
+    },
+    {
+      "name": "EPF / PF",
+      "value": 600000,
+      "rate": 8.2,
+      "contribPct": 15
+    }
+    // ... more assets
+  ]
+}</code></pre>
+
+  <h3 class="doc-subheading">Field reference</h3>
+  <table class="doc-table">
+    <thead>
+      <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>monthly</code></td><td>number</td><td>Monthly contribution baseline amount.</td></tr>
+      <tr><td><code>flatYears</code></td><td>integer</td><td>Years before step-up starts (0–15).</td></tr>
+      <tr><td><code>cycleYears</code></td><td>integer</td><td>How often (in years) the step-up occurs (1–10).</td></tr>
+      <tr><td><code>stepUpPct</code></td><td>number</td><td>Percentage increase per cycle, applied to the original baseline.</td></tr>
+      <tr><td><code>inflation</code></td><td>number</td><td>Annual inflation rate used for the real-terms display.</td></tr>
+      <tr><td><code>milestones</code></td><td>number[3]</td><td>Exactly three milestone years, in any order.</td></tr>
+      <tr><td><code>assets[].name</code></td><td>string</td><td>Display label for the asset row.</td></tr>
+      <tr><td><code>assets[].value</code></td><td>number</td><td>Current value (≥ 0).</td></tr>
+      <tr><td><code>assets[].rate</code></td><td>number</td><td>Expected annual return percentage.</td></tr>
+      <tr><td><code>assets[].contribPct</code></td><td>number</td><td>Contribution weight (relative, not capped at 100).</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout warn">
+    <strong>The <code>id</code> field is internal.</strong> Exported files may contain an <code>id</code> field on each asset — this is an internal identifier used by the calculator's rendering engine. It is ignored on import; a fresh ID is assigned to each asset when loaded.
+  </div>
+
+  <h2 class="doc-heading">Editing a file manually</h2>
+  <p class="prose">The JSON format is intentionally simple. You can open an exported file in any text editor and change values directly — useful if you want to try a scenario that's outside the slider range, or if you want to script the generation of a starting template.</p>
+  <p class="prose">After editing, save the file and import it back into the calculator. The app does basic sanity checking (missing fields fall back to defaults) but does not validate value ranges.</p>
+
+  <div class="page-nav">
+    <a href="math.html" class="prev">The math</a>
+    <a href="code.html" class="next">Code walkthrough</a>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <p>This is a planning tool, not financial advice. &nbsp;·&nbsp; <a href="../../app/index.html">Open the calculator</a> &nbsp;·&nbsp; <a href="https://github.com/nilays-ns/portfolio-ledger" target="_blank" rel="noopener">GitHub</a></p>
+</footer>
+
+<script src="../js/nav.js"></script>
+</body>
+</html>

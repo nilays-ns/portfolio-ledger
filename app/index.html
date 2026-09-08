@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio ledger — build your own projection</title>
+<meta name="description" content="A free, private portfolio growth calculator. Add your own assets and contribution plan, and see where your money is headed in 5, 10 or 25 years. Nothing is saved or sent anywhere.">
+<meta name="theme-color" content="#1F4D3F">
+<meta property="og:title" content="Portfolio ledger — build your own projection">
+<meta property="og:description" content="A free, private portfolio growth calculator you can run entirely in your browser.">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="page">
+
+  <header class="masthead">
+    <div class="masthead-row">
+      <div>
+        <p class="masthead-label">A portfolio growth calculator</p>
+        <h1>Build your own ledger</h1>
+      </div>
+    </div>
+    <p class="masthead-note">Enter your own asset classes and values below — nothing here is saved or sent anywhere, so it's safe to fill in real numbers and safe to share the blank file with anyone. Use "Export" to save your entries to a file you can reopen later, or hand to a friend as a starting point.</p>
+    <div class="rule-double"></div>
+  </header>
+
+  <section class="hero">
+    <div>
+      <p class="hero-label">Current portfolio value</p>
+      <p class="hero-number" id="heroTotal">₹0</p>
+      <p class="hero-sub" id="heroSub">Across 0 asset classes</p>
+    </div>
+    <div class="file-actions">
+      <button class="ghost-btn" id="loadExampleBtn">Load an example</button>
+      <button class="ghost-btn" id="importBtn">Import</button>
+      <button class="ghost-btn" id="exportBtn">Export</button>
+      <input type="file" id="importFile" accept="application/json" style="display:none;">
+    </div>
+  </section>
+
+  <section class="horizons">
+    <div class="horizon-block">
+      <p class="h-label">In <input type="number" id="milestone0" value="5" min="1" max="60"> years</p>
+      <p class="h-value" id="val0">—</p>
+      <p class="h-meta" id="meta0">—</p>
+    </div>
+    <div class="horizon-block">
+      <p class="h-label">In <input type="number" id="milestone1" value="10" min="1" max="60"> years</p>
+      <p class="h-value" id="val1">—</p>
+      <p class="h-meta" id="meta1">—</p>
+    </div>
+    <div class="horizon-block">
+      <p class="h-label">In <input type="number" id="milestone2" value="25" min="1" max="60"> years</p>
+      <p class="h-value" id="val2">—</p>
+      <p class="h-meta" id="meta2">—</p>
+    </div>
+  </section>
+
+  <section class="chart-section">
+    <p class="section-label">Portfolio value over time</p>
+    <div class="chart-legend">
+      <span><i class="dot forest"></i>Continuing to invest</span>
+      <span><i class="dot plum"></i>If you stopped investing today</span>
+    </div>
+    <div style="position:relative;height:320px;">
+      <canvas id="growthChart" role="img" aria-label="Line chart comparing projected total portfolio value if contributions continue versus if no further money is invested">Chart showing portfolio growth over time under two scenarios.</canvas>
+    </div>
+    <label class="toggle-row">
+      <input type="checkbox" id="realTerms">
+      <span>Show in today's rupees (adjust for inflation)</span>
+    </label>
+  </section>
+
+  <section class="assumptions">
+    <p class="section-label">Your contribution plan</p>
+    <div class="assume-grid">
+      <div class="assume-row">
+        <label for="sipMonthly">Monthly investment</label>
+        <input type="range" id="sipMonthly" min="0" max="300000" step="5000" value="25000">
+        <span class="assume-val" id="sipMonthlyOut"></span>
+      </div>
+      <div class="assume-row">
+        <label for="flatYears">Flat for the first</label>
+        <input type="range" id="flatYears" min="0" max="15" step="1" value="5">
+        <span class="assume-val" id="flatYearsOut"></span>
+      </div>
+      <div class="assume-row">
+        <label for="cycleYears">Then step up every</label>
+        <input type="range" id="cycleYears" min="1" max="10" step="1" value="2">
+        <span class="assume-val" id="cycleYearsOut"></span>
+      </div>
+      <div class="assume-row">
+        <label for="stepUp">Step-up amount</label>
+        <input type="range" id="stepUp" min="0" max="30" step="1" value="10">
+        <span class="assume-val" id="stepUpOut"></span>
+      </div>
+      <div class="assume-row">
+        <label for="inflation">Inflation (for real terms)</label>
+        <input type="range" id="inflation" min="0" max="12" step="0.5" value="6">
+        <span class="assume-val" id="inflationOut"></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="breakdown">
+    <p class="section-label">Your assets</p>
+    <p class="table-caption" style="margin:-8px 0 14px;">Edit any field directly — updates apply immediately. Use "+ Add an asset" for a new row, or × to delete one.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:170px;">Asset<span class="col-resize-handle"></span></th>
+            <th style="width:120px;">Current value
+              <span class="info-tip" tabindex="0" data-tip="What this asset is worth today, before any future growth or contributions."><i>?</i></span>
+              <span class="col-resize-handle"></span>
+            </th>
+            <th style="width:95px;">Return %/yr
+              <span class="info-tip" tabindex="0" data-tip="The annual growth rate you expect for this asset, compounding monthly."><i>?</i></span>
+              <span class="col-resize-handle"></span>
+            </th>
+            <th style="width:140px;">% of monthly investment
+              <span class="info-tip" tabindex="0" data-tip="How your monthly contribution splits across assets. These are weights relative to each other — they don't need to add up to 100."><i>?</i></span>
+              <span class="col-resize-handle"></span>
+            </th>
+            <th id="thM0" style="width:100px;"><span class="th-label" id="thM0Label">In 5y</span>
+              <span class="info-tip" tabindex="0" data-tip="Projected value at this milestone, given this asset's return rate and its share of your ongoing contributions."><i>?</i></span>
+              <span class="col-resize-handle"></span>
+            </th>
+            <th id="thM1" style="width:100px;"><span class="th-label" id="thM1Label">In 10y</span>
+              <span class="info-tip" tabindex="0" data-tip="Projected value at this milestone, given this asset's return rate and its share of your ongoing contributions."><i>?</i></span>
+              <span class="col-resize-handle"></span>
+            </th>
+            <th id="thM2" style="width:100px;"><span class="th-label" id="thM2Label">In 25y</span>
+              <span class="info-tip" tabindex="0" data-tip="Projected value at this milestone, given this asset's return rate and its share of your ongoing contributions."><i>?</i></span>
+              <span class="col-resize-handle"></span>
+            </th>
+            <th style="width:40px;"></th>
+          </tr>
+        </thead>
+        <tbody id="assetBody"></tbody>
+        <tfoot>
+          <tr>
+            <td>Total</td><td id="totCurrent"></td><td></td><td id="totContribPct"></td>
+            <td id="tot0"></td><td id="tot1"></td><td id="tot2"></td><td></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <p class="table-caption" id="contribWarning" style="display:none;"></p>
+    <button class="ghost-btn add-row-btn" id="addAssetBtn">+ Add an asset</button>
+  </section>
+
+  <footer class="notes">
+    <p>Model: each asset compounds monthly at the return you set. New monthly money splits across assets by the "% of monthly investment" column (these are read relative to each other, so they don't need to add up to exactly 100) and stays there — it isn't rebalanced afterward. Contributions stay flat for the first stretch you set, then step up by the amount you set, on the cycle you set.</p>
+    <p>This is a planning projection, not a forecast or investment advice. Real returns for equities, gold, silver, crypto or private company shares will be far less smooth than a constant annual rate implies, and nothing here accounts for taxes.</p>
+  </footer>
+
+</div>
+
+<div class="shared-tooltip" id="sharedTooltip" role="tooltip"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

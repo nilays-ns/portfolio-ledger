@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mid-career Investor — Portfolio Ledger Tutorial</title>
+<meta name="description" content="Model a diverse mid-career portfolio with SIP, PF, gold, and stocks — with step-up contributions.">
+<link rel="icon" type="image/svg+xml" href="../../app/favicon.svg">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">Portfolio Ledger</a>
+    <ul class="nav-links">
+      <li><a href="../index.html">Docs</a></li>
+      <li><a href="index.html" class="active">Tutorial</a></li>
+    </ul>
+    <div class="nav-ctas">
+      <a href="https://github.com/nilays-ns/portfolio-ledger" target="_blank" rel="noopener">GitHub ↗</a>
+      <a href="../../app/index.html" class="nav-cta-primary">Open app ↗</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Toggle navigation">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8">
+        <line x1="2" y1="5" x2="18" y2="5"/>
+        <line x1="2" y1="10" x2="18" y2="10"/>
+        <line x1="2" y1="15" x2="18" y2="15"/>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<div class="page-narrow">
+
+  <div class="breadcrumb">
+    <a href="../index.html">Docs</a>
+    <span>›</span>
+    <a href="index.html">Tutorials</a>
+    <span>›</span>
+    Mid-career investor
+  </div>
+
+  <div class="persona-nav">
+    <a href="fresh-graduate.html">Fresh graduate</a>
+    <a href="mid-career.html" class="active">Mid-career</a>
+    <a href="near-retirement.html">Near retirement</a>
+    <a href="foreign-currency.html">Foreign currency</a>
+    <a href="trader.html">Trader</a>
+    <a href="safe-investor.html">Safe investor</a>
+  </div>
+
+  <span class="card-tag">Intermediate</span>
+  <h1 style="font-family:'Newsreader',serif;font-weight:500;font-size:36px;margin:12px 0 12px;letter-spacing:-0.01em;">Mid-career investor</h1>
+  <p style="font-size:17px;color:var(--ink-soft);margin:0 0 40px;max-width:52ch;">Age 32–35. Decent corpus built up over 10 years, rising income, and 20+ years still ahead. Now is when portfolio diversification and step-up contributions matter most.</p>
+
+  <hr class="rule" style="margin-top:0;">
+
+  <h2 class="doc-heading">Who this is for</h2>
+  <div class="prose">
+    <p>You've been investing for about a decade. You have a meaningful EPF balance from multiple jobs, a PPF account nearing its first maturity, a SIP running, some gold (bought for a wedding or as a hedge), and maybe a handful of individual stocks. Your income has grown and so has your investable surplus.</p>
+    <p>This walkthrough shows how to model a multi-asset portfolio and use the step-up feature to reflect the income growth you expect over the next decade.</p>
+  </div>
+
+  <h2 class="doc-heading">Starting position</h2>
+  <table class="doc-table">
+    <thead><tr><th>Asset</th><th>Current value</th><th>Return %/yr</th><th>Contrib weight</th></tr></thead>
+    <tbody>
+      <tr><td>EPF / PF</td><td>₹8,00,000</td><td>8.2</td><td>15</td></tr>
+      <tr><td>PPF</td><td>₹4,50,000</td><td>7.25</td><td>10</td></tr>
+      <tr><td>SIP / mutual funds</td><td>₹12,00,000</td><td>12</td><td>50</td></tr>
+      <tr><td>Stocks (direct equity)</td><td>₹3,00,000</td><td>14</td><td>15</td></tr>
+      <tr><td>Gold</td><td>₹2,00,000</td><td>9</td><td>10</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="doc-heading">Step-by-step</h2>
+  <ol class="steps">
+    <li>
+      <div class="step-body">
+        <p class="step-title">Click "Load an example" then clear it</p>
+        <p class="step-desc">This resets the table to a clean state with the right structure. Then delete all rows and re-enter them with the values above — entering your own numbers builds intuition for what each field does.</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <p class="step-title">Enter all five asset rows</p>
+        <p class="step-desc">Add each asset with the values from the table above. Notice that the contribution weights don't add to 100 — that's fine. The weights are 15 + 10 + 50 + 15 + 10 = 100 in this case, but they'd work just as well if you used 3 + 2 + 10 + 3 + 2.</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <p class="step-title">Set the contribution plan</p>
+        <p class="step-desc">Monthly investment: ₹40,000. Flat for the first: <strong>2 years</strong>. Step up every: <strong>2 years</strong>. Step-up amount: <strong>15%</strong> (your income is growing faster than inflation at this stage of your career).</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <p class="step-title">Set milestones to 5, 15, 25</p>
+        <p class="step-desc">These correspond roughly to age 38, 48, and 58 — a mid-term check-in, near-retirement, and retirement horizon.</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <p class="step-title">Observe the asset-level projections in the table</p>
+        <p class="step-desc">Look at the "In 25y" column for each row. SIP should dominate because it gets the highest contribution weight and a high return rate. Stocks may project higher per-unit growth despite lower weight, because of the 14% return rate — notice how return rate and contribution weight interact.</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <p class="step-title">Try reducing the SIP return from 12% to 10%</p>
+        <p class="step-desc">Change SIP's Return %/yr to 10 and observe how much the 25-year total changes. This is sensitivity analysis — a 2% difference in return rate over 25 years has a dramatic effect on the final number. This is why picking a realistic (not optimistic) return assumption matters.</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <p class="step-title">Enable the inflation toggle</p>
+        <p class="step-desc">Check "Show in today's rupees". The real-terms 25-year number is the more honest figure to plan around. If your target is to have ₹5 Cr of today's purchasing power, this view tells you whether you're on track.</p>
+      </div>
+    </li>
+  </ol>
+
+  <h2 class="doc-heading">What the numbers mean</h2>
+  <div class="prose">
+    <p>With ₹40,000/month, 15% step-ups, and these return assumptions, the 25-year nominal corpus should be in the range of ₹8–12 Cr. In today's money (6% inflation), that's roughly ₹2–3 Cr.</p>
+    <p>The step-up contribution has a large effect here. Try setting the step-up to 0 (no increase ever) and observe the difference — the step-up alone often adds 40–60% to the final corpus over a 25-year period.</p>
+  </div>
+
+  <div class="callout">
+    <strong>Tip:</strong> This is a good time to run two scenarios — "aggressive" (14% SIP return, 15% step-up) and "conservative" (10% SIP return, 8% step-up). Export both and keep them. Your actual outcome will likely land somewhere between them.
+  </div>
+
+  <div class="page-nav">
+    <a href="fresh-graduate.html" class="prev">Fresh graduate</a>
+    <a href="near-retirement.html" class="next">Near retirement</a>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <p>This is a planning tool, not financial advice. &nbsp;·&nbsp; <a href="../../app/index.html">Open the calculator</a> &nbsp;·&nbsp; <a href="https://github.com/nilays-ns/portfolio-ledger" target="_blank" rel="noopener">GitHub</a></p>
+</footer>
+
+<script src="../js/nav.js"></script>
+</body>
+</html>

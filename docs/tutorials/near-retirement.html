@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Near Retirement — Portfolio Ledger Tutorial</title>
+<meta name="description" content="Model a near-retirement portfolio — large corpus, inflation toggle, and understanding what stopping contributions means.">
+<link rel="icon" type="image/svg+xml" href="../../app/favicon.svg">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">Portfolio Ledger</a>
+    <ul class="nav-links">
+      <li><a href="../index.html">Docs</a></li>
+      <li><a href="index.html" class="active">Tutorial</a></li>
+    </ul>
+    <div class="nav-ctas">
+      <a href="https://github.com/nilays-ns/portfolio-ledger" target="_blank" rel="noopener">GitHub ↗</a>
+      <a href="../../app/index.html" class="nav-cta-primary">Open app ↗</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Toggle navigation">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8">
+        <line x1="2" y1="5" x2="18" y2="5"/>
+        <line x1="2" y1="10" x2="18" y2="10"/>
+        <line x1="2" y1="15" x2="18" y2="15"/>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<div class="page-narrow">
+
+  <div class="breadcrumb">
+    <a href="../index.html">Docs</a>
+    <span>›</span>
+    <a href="index.html">Tutorials</a>
+    <span>›</span>
+    Near retirement
+  </div>
+
+  <div class="persona-nav">
+    <a href="fresh-graduate.html">Fresh graduate</a>
+    <a href="mid-career.html">Mid-career</a>
+    <a href="near-retirement.html" class="active">Near retirement</a>
+    <a href="foreign-currency.html">Foreign currency</a>
+    <a href="trader.html">Trader</a>
+    <a href="safe-investor.html">Safe investor</a>
+  </div>
+
+  <span class="card-tag">Advanced</span>
+  <h1 style="font-family:'Newsreader',serif;font-weight:500;font-size:36px;margin:12px 0 12px;letter-spacing:-0.01em;">Near retirement</h1>
+  <p style="font-size:17px;color:var(--ink-soft);margin:0 0 40px;max-width:52ch;">Age 48–52. A substantial corpus built over 25+ years, 10–15 earning years remaining. The focus shifts from growth to preservation — and inflation is the main enemy.</p>
+
+  <hr class="rule" style="margin-top:0;">
+
+  <h2 class="doc-heading">Who this is for</h2>
+  <div class="prose">
+    <p>You have a large portfolio accumulated over decades. You're still contributing, but your horizon to retirement is now 10–15 years rather than 30. Your key questions are different now: Will this corpus sustain me through retirement? How much is it really worth in today's money? What if I stopped contributing tomorrow?</p>
+    <p>This walkthrough focuses on the inflation toggle and the "stopped today" chart — the two features that matter most at this stage.</p>
+  </div>
+
+  <h2 class="doc-heading">Starting position</h2>
+  <table class="doc-table">
+    <thead><tr><th>Asset</th><th>Current value</th><th>Return %/yr</th><th>Contrib weight</th></tr></thead>
+    <tbody>
+      <tr><td>EPF / PF</td><td>₹45,00,000</td><td>8.2</td><td>10</td></tr>
+      <tr><td>PPF</td><td>₹18,00,000</td><td>7.25</td><td>5</td></tr>
+      <tr><td>SIP / mutual funds</td><td>₹60,00,000</td><td>11</td><td>50</td></tr>
+      <tr><td>Stocks (direct equity)</td><td>₹20,00,000</td><td>12</td><td>15</td></tr>
+      <tr><td>Gold</td><td>₹12,00,000</td><td>9</td><td>5</td></tr>
+      <tr><td>Real estate (investment property)</td><td>₹80,00,000</td><td>7</td><td>0</td></tr>
+      <tr><td>Fixed deposits</td><td>₹10,00,000</td><td>7</td><td>15</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout warn">
+    <strong>Real estate note:</strong> Set the contribution weight for real estate to 0 — you're not making regular monthly payments toward it. It's a lump sum asset that simply compounds at its return rate.
+  </div>
+
+  <h2 class="doc-heading">Step-by-step</h2>
+  <ol class="steps">
+    <li>
+      <div class="step-body">
+        <p class="step-title">Enter all seven asset rows</p>
+        <p class="step-desc">Enter each asset with the values from the table. For real estate, set contrib weight to 0 — it grows on its own but receives no new monthly money.</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <p class="step-title">Set the contribution plan</p>
+        <p class="step-desc">Monthly investment: ₹80,000. Flat for the first: <strong>5 years</strong> (peak earning years — keep it flat and high). Step up every: 2 years. Step-up amount: <strong>5%</strong> (modest, reflecting slower income growth near the peak of your career).</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <p class="step-title">Set milestones to 5, 10, 15</p>
+        <p class="step-desc">These are the most relevant horizons now — your retirement window is 10–15 years away. You want to see where you'll be at each of these checkpoints.</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <p class="step-title">Note the nominal 15-year total</p>
+        <p class="step-desc">Write down the "In 15y" projected value before doing anything else. You'll compare this to the real-terms value next.</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <p class="step-title">Enable inflation adjustment at 6%</p>
+        <p class="step-desc">Check "Show in today's rupees". Observe how much the 15-year total shrinks. At 6% inflation over 15 years, money loses roughly 58% of its purchasing power — so a ₹10 Cr nominal corpus in 15 years is worth about ₹4.2 Cr in today's money. This is the number to plan a retirement lifestyle around.</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <p class="step-title">Study the "stopped today" chart</p>
+        <p class="step-desc">Look at the gap between the two lines. At your corpus size, the gap (value of future contributions) is much smaller relative to the total than it was at age 25. This is a key near-retirement insight: your existing corpus is now doing most of the work. Future contributions matter less than the return rate on what you already have.</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <p class="step-title">Simulate early retirement — set monthly investment to ₹0</p>
+        <p class="step-desc">Set the monthly investment slider to 0. This shows what happens if you retired today and made no further contributions. Compare the 15-year total to your target retirement corpus. If the gap is small, you may already be financially independent.</p>
+      </div>
+    </li>
+  </ol>
+
+  <h2 class="doc-heading">What the numbers mean</h2>
+  <div class="prose">
+    <p>With a ₹2.45 Cr total corpus today (excluding real estate at ₹80L, total is ₹1.65 Cr in liquid assets plus ₹80L real estate = ₹2.45 Cr), growing at blended ~9–10%, even with zero further contributions the portfolio should roughly double in real terms over 15 years.</p>
+    <p>The key question at this stage is not "how much will I have" but "is this enough to sustain my spending for 25–30 years of retirement?" Portfolio Ledger models accumulation, not drawdown — but you can use the "stopped today" projection to estimate the corpus size at retirement, then use a separate 4% withdrawal rate rule of thumb to check sustainability.</p>
+  </div>
+
+  <div class="callout">
+    <strong>The 4% rule (rough guide):</strong> A retirement corpus can sustain roughly 4% annual withdrawals indefinitely (adjusted for inflation). If you need ₹12L/year in today's money, you need ~₹3 Cr in today's purchasing power at retirement. This is a rough heuristic — consult a financial planner for personalised advice.
+  </div>
+
+  <div class="page-nav">
+    <a href="mid-career.html" class="prev">Mid-career investor</a>
+    <a href="foreign-currency.html" class="next">Foreign currency investor</a>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <p>This is a planning tool, not financial advice. &nbsp;·&nbsp; <a href="../../app/index.html">Open the calculator</a> &nbsp;·&nbsp; <a href="https://github.com/nilays-ns/portfolio-ledger" target="_blank" rel="noopener">GitHub</a></p>
+</footer>
+
+<script src="../js/nav.js"></script>
+</body>
+</html>

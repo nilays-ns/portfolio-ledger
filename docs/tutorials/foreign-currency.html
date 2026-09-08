@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Foreign Currency Investor — Portfolio Ledger Tutorial</title>
+<meta name="description" content="Use Portfolio Ledger with USD, EUR, or any currency — international ETFs, NRE deposits, and exchange rate considerations.">
+<link rel="icon" type="image/svg+xml" href="../../app/favicon.svg">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">Portfolio Ledger</a>
+    <ul class="nav-links">
+      <li><a href="../index.html">Docs</a></li>
+      <li><a href="index.html" class="active">Tutorial</a></li>
+    </ul>
+    <div class="nav-ctas">
+      <a href="https://github.com/nilays-ns/portfolio-ledger" target="_blank" rel="noopener">GitHub ↗</a>
+      <a href="../../app/index.html" class="nav-cta-primary">Open app ↗</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Toggle navigation">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8">
+        <line x1="2" y1="5" x2="18" y2="5"/>
+        <line x1="2" y1="10" x2="18" y2="10"/>
+        <line x1="2" y1="15" x2="18" y2="15"/>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<div class="page-narrow">
+
+  <div class="breadcrumb">
+    <a href="../index.html">Docs</a>
+    <span>›</span>
+    <a href="index.html">Tutorials</a>
+    <span>›</span>
+    Foreign currency investor
+  </div>
+
+  <div class="persona-nav">
+    <a href="fresh-graduate.html">Fresh graduate</a>
+    <a href="mid-career.html">Mid-career</a>
+    <a href="near-retirement.html">Near retirement</a>
+    <a href="foreign-currency.html" class="active">Foreign currency</a>
+    <a href="trader.html">Trader</a>
+    <a href="safe-investor.html">Safe investor</a>
+  </div>
+
+  <span class="card-tag brass">Global</span>
+  <h1 style="font-family:'Newsreader',serif;font-weight:500;font-size:36px;margin:12px 0 12px;letter-spacing:-0.01em;">Foreign currency investor</h1>
+  <p style="font-size:17px;color:var(--ink-soft);margin:0 0 40px;max-width:52ch;">An NRI or global investor with assets in USD, EUR, or GBP alongside Indian holdings. The calculator is currency-agnostic — here's how to use it across currencies.</p>
+
+  <hr class="rule" style="margin-top:0;">
+
+  <h2 class="doc-heading">Who this is for</h2>
+  <div class="prose">
+    <p>You earn in a foreign currency (or hold foreign assets) — perhaps you're an NRI with a US brokerage account and NRE deposits back home, or a resident Indian investing in international ETFs via Liberalised Remittance Scheme (LRS). Your portfolio spans two currencies and you want a unified view.</p>
+    <p>Portfolio Ledger has no built-in currency conversion — but this is a feature, not a limitation. You choose how to handle it.</p>
+  </div>
+
+  <h2 class="doc-heading">Two approaches to multi-currency portfolios</h2>
+
+  <h3 class="doc-subheading">Approach A: Single currency, converted values</h3>
+  <p class="prose">Convert everything to one currency (e.g., INR) at today's exchange rate. Enter all values in INR. For USD assets, adjust the return rate to account for expected INR/USD depreciation: historically the rupee has depreciated ~2–3% per year against the dollar. So a US equity fund returning 10% USD CAGR might be entered as 12–13% in INR terms.</p>
+  <p class="prose">This is the simpler approach and works well for planning purposes.</p>
+
+  <h3 class="doc-subheading">Approach B: Separate currency portfolios</h3>
+  <p class="prose">Build two separate plans — one in INR, one in USD — and keep them as separate exported files. Review them independently. This avoids mixing inflation rates (US inflation ~3% vs. India inflation ~6%) and keeps exchange rate assumptions explicit.</p>
+
+  <h2 class="doc-heading">Step-by-step (Approach A — NRI example)</h2>
+
+  <p class="prose">Scenario: NRI based in the US, with both US and Indian holdings, planning to retire in India in 15 years. All values entered in INR at today's rate (1 USD ≈ ₹84).</p>
+
+  <table class="doc-table">
+    <thead><tr><th>Asset</th><th>Current value (INR)</th><th>Return %/yr</th><th>Contrib weight</th></tr></thead>
+    <tbody>
+      <tr><td>US index fund (S&amp;P 500 ETF)</td><td>₹42,00,000 ($50k × 84)</td><td>13</td><td>40</td></tr>
+      <tr><td>NRE Fixed Deposit</td><td>₹16,80,000 ($20k × 84)</td><td>7.5</td><td>20</td></tr>
+      <tr><td>NPS (National Pension System)</td><td>₹8,00,000</td><td>10</td><td>20</td></tr>
+      <tr><td>Gold ETF (India)</td><td>₹5,00,000</td><td>9</td><td>10</td></tr>
+      <tr><td>US tech stocks (individual)</td><td>₹4,20,000 ($5k × 84)</td><td>15</td><td>10</td></tr>
+    </tbody>
+  </table>
+
+  <ol class="steps">
+    <li>
+      <div class="step-body">
+        <p class="step-title">Enter all assets with INR values</p>
+        <p class="step-desc">Convert your USD holdings to INR at today's exchange rate. The values will be slightly stale as the rate moves, but for long-term planning this is fine — recalibrate once a year.</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <p class="step-title">Set USD asset return rates in INR terms</p>
+        <p class="step-desc">For the S&amp;P 500 ETF: US equities have historically returned ~10% USD CAGR. Add ~3% for INR depreciation → enter 13%. For NRE FD: the interest rate is already in INR terms (tax-free for NRIs), so enter the rate directly (~7–7.5%).</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <p class="step-title">Set your monthly contribution in INR</p>
+        <p class="step-desc">If you contribute $800/month to your US brokerage and ₹20,000/month to Indian accounts, that's approximately ₹67,200 + ₹20,000 = ₹87,200/month total. Use ₹87,000 as a round number.</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <p class="step-title">Set milestones to 5, 10, 15</p>
+        <p class="step-desc">15 years is your retirement target. The 5- and 10-year checkpoints help you see if you're on track.</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <p class="step-title">Use India's inflation rate (6%) for the real-terms toggle</p>
+        <p class="step-desc">Since you plan to retire in India, Indian inflation is the right deflator. The calculator's inflation slider is set at 6% by default — leave it there.</p>
+      </div>
+    </li>
+  </ol>
+
+  <h2 class="doc-heading">What to watch for</h2>
+  <div class="prose">
+    <p>The currency depreciation assumption embedded in the USD return rate is the biggest source of uncertainty. If the rupee depreciates faster (say, 4%/year) your INR-denominated returns from USD assets will be higher. If it slows or reverses, they'll be lower.</p>
+    <p>For a US-based investor who plans to retire in the US (spending in USD), use Approach B — build the USD portfolio separately using USD values, a ~3% US inflation rate, and S&amp;P 500's historical ~10% USD return without any depreciation adjustment.</p>
+  </div>
+
+  <div class="page-nav">
+    <a href="near-retirement.html" class="prev">Near retirement</a>
+    <a href="trader.html" class="next">Active trader</a>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <p>This is a planning tool, not financial advice. &nbsp;·&nbsp; <a href="../../app/index.html">Open the calculator</a> &nbsp;·&nbsp; <a href="https://github.com/nilays-ns/portfolio-ledger" target="_blank" rel="noopener">GitHub</a></p>
+</footer>
+
+<script src="../js/nav.js"></script>
+</body>
+</html>

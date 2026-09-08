@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Safe Investor — Portfolio Ledger Tutorial</title>
+<meta name="description" content="Model a conservative portfolio of FDs, PPF, and government bonds — and understand what inflation does to safe money.">
+<link rel="icon" type="image/svg+xml" href="../../app/favicon.svg">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">Portfolio Ledger</a>
+    <ul class="nav-links">
+      <li><a href="../index.html">Docs</a></li>
+      <li><a href="index.html" class="active">Tutorial</a></li>
+    </ul>
+    <div class="nav-ctas">
+      <a href="https://github.com/nilays-ns/portfolio-ledger" target="_blank" rel="noopener">GitHub ↗</a>
+      <a href="../../app/index.html" class="nav-cta-primary">Open app ↗</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Toggle navigation">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8">
+        <line x1="2" y1="5" x2="18" y2="5"/>
+        <line x1="2" y1="10" x2="18" y2="10"/>
+        <line x1="2" y1="15" x2="18" y2="15"/>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<div class="page-narrow">
+
+  <div class="breadcrumb">
+    <a href="../index.html">Docs</a>
+    <span>›</span>
+    <a href="index.html">Tutorials</a>
+    <span>›</span>
+    Safe investor
+  </div>
+
+  <div class="persona-nav">
+    <a href="fresh-graduate.html">Fresh graduate</a>
+    <a href="mid-career.html">Mid-career</a>
+    <a href="near-retirement.html">Near retirement</a>
+    <a href="foreign-currency.html">Foreign currency</a>
+    <a href="trader.html">Trader</a>
+    <a href="safe-investor.html" class="active">Safe investor</a>
+  </div>
+
+  <span class="card-tag">Conservative</span>
+  <h1 style="font-family:'Newsreader',serif;font-weight:500;font-size:36px;margin:12px 0 12px;letter-spacing:-0.01em;">Safe investor</h1>
+  <p style="font-size:17px;color:var(--ink-soft);margin:0 0 40px;max-width:52ch;">FDs, PPF, and government bonds only. Predictable, capital-protected returns. This walkthrough shows what a fully conservative portfolio looks like — and what inflation quietly does to it over time.</p>
+
+  <hr class="rule" style="margin-top:0;">
+
+  <h2 class="doc-heading">Who this is for</h2>
+  <div class="prose">
+    <p>You prioritise capital safety over maximum returns. You are uncomfortable with market volatility and prefer instruments where the return is known in advance — bank FDs, PPF, government bonds, NSC, and similar. You may be a retiree, a conservative saver, or someone who simply hasn't been able to stomach market ups and downs.</p>
+    <p>This walkthrough builds a conservative portfolio and delivers the key insight of safe investing: after inflation, the real return on "safe" instruments is often very low — sometimes near zero or negative.</p>
+  </div>
+
+  <h2 class="doc-heading">Starting position</h2>
+  <table class="doc-table">
+    <thead><tr><th>Asset</th><th>Current value</th><th>Return %/yr</th><th>Contrib weight</th></tr></thead>
+    <tbody>
+      <tr><td>PPF</td><td>₹6,00,000</td><td>7.25</td><td>25</td></tr>
+      <tr><td>EPF / PF</td><td>₹4,00,000</td><td>8.2</td><td>20</td></tr>
+      <tr><td>Fixed deposits (bank FD)</td><td>₹5,00,000</td><td>7</td><td>30</td></tr>
+      <tr><td>Government bonds / G-Secs</td><td>₹2,00,000</td><td>7.1</td><td>15</td></tr>
+      <tr><td>NSC (National Savings Certificate)</td><td>₹1,00,000</td><td>7.7</td><td>10</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="doc-heading">Step-by-step</h2>
+  <ol class="steps">
+    <li>
+      <div class="step-body">
+        <p class="step-title">Enter all five assets</p>
+        <p class="step-desc">Enter the values from the table. Notice that all return rates are clustered between 7% and 8.2% — this is typical for capital-protected instruments in India as of 2024–25.</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <p class="step-title">Set the contribution plan</p>
+        <p class="step-desc">Monthly investment: ₹20,000. Flat for the first: 5 years. Step up every: 3 years. Step-up amount: 8%.</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <p class="step-title">Set milestones to 10, 20, 30</p>
+        <p class="step-desc">Note the nominal 30-year total. Write it down.</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <p class="step-title">Enable the inflation toggle at 6%</p>
+        <p class="step-desc">Now observe the real-terms 30-year total. Compare it to what you wrote down. At 7% nominal return and 6% inflation, your real return is approximately 1% per year — meaning your money barely keeps pace with inflation.</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <p class="step-title">Try inflation at 7%</p>
+        <p class="step-desc">Drag the inflation slider to 7%. At this rate, your FD returns are completely wiped out by inflation. Your PPF at 7.25% earns a real return of only 0.25%/year — roughly nothing over 30 years in real terms.</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <p class="step-title">Compare to a hybrid scenario</p>
+        <p class="step-desc">Add one more row: "SIP / mutual funds". Set current value to ₹0, return to 11%, contrib weight to 30. Redistribute — reduce FD weight from 30 to 10, reduce NSC from 10 to 5, reduce G-Sec from 15 to 5. Observe what adding even a small equity allocation does to the real-terms 30-year total.</p>
+      </div>
+    </li>
+  </ol>
+
+  <h2 class="doc-heading">What the numbers mean</h2>
+  <div class="prose">
+    <p>A fully conservative portfolio at 7–8% nominal returns grows significantly in nominal terms over 30 years. The problem is inflation. At India's historical average of 5–7%, "safe" instruments provide a real return of 0–2% per year — which means your purchasing power barely grows.</p>
+    <p>This is not an argument against safe instruments — capital protection and predictability are genuine value. PPF and EPF are especially strong because their returns are tax-free, which improves the real post-tax return considerably compared to FDs (where interest is taxed as income).</p>
+    <p>The lesson from this walkthrough is that even a small allocation to higher-return assets (10–20% in equity mutual funds) can meaningfully improve long-run real returns without dramatically changing the risk profile of your overall portfolio.</p>
+  </div>
+
+  <div class="callout">
+    <strong>Tax matters for "safe" instruments:</strong> FD interest is taxable as income. PPF and EPF maturity proceeds are tax-free. For a high-income earner in the 30% tax bracket, the effective post-tax return on an FD at 7% is only ~4.9% — well below inflation. This is a key reason financial planners recommend PPF over FDs for the fixed-income portion of a portfolio.
+  </div>
+
+  <div class="page-nav">
+    <a href="trader.html" class="prev">Active trader</a>
+    <span></span>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <p>This is a planning tool, not financial advice. &nbsp;·&nbsp; <a href="../../app/index.html">Open the calculator</a> &nbsp;·&nbsp; <a href="https://github.com/nilays-ns/portfolio-ledger" target="_blank" rel="noopener">GitHub</a></p>
+</footer>
+
+<script src="../js/nav.js"></script>
+</body>
+</html>

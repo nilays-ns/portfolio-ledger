@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio Ledger — Docs</title>
+<meta name="description" content="Documentation for Portfolio Ledger — a free, private portfolio growth calculator that runs entirely in your browser.">
+<link rel="icon" type="image/svg+xml" href="../app/favicon.svg">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="index.html">Portfolio Ledger</a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Docs</a></li>
+      <li><a href="tutorials/index.html">Tutorial</a></li>
+    </ul>
+    <div class="nav-ctas">
+      <a href="https://github.com/nilays-ns/portfolio-ledger" target="_blank" rel="noopener">GitHub ↗</a>
+      <a href="../app/index.html" class="nav-cta-primary">Open app ↗</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Toggle navigation">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8">
+        <line x1="2" y1="5" x2="18" y2="5"/>
+        <line x1="2" y1="10" x2="18" y2="10"/>
+        <line x1="2" y1="15" x2="18" y2="15"/>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<div class="page">
+
+  <div class="hero">
+    <p class="hero-label">Portfolio Ledger</p>
+    <h1>Build your own ledger</h1>
+    <p class="hero-sub">A free, private portfolio growth calculator. Add your own assets and contribution plan, and see where your money is headed in 5, 10 or 25 years. Nothing you type is saved or sent anywhere.</p>
+    <div class="hero-actions">
+      <a href="../app/index.html" class="btn btn-primary">Open the calculator ↗</a>
+      <a href="tutorials/index.html" class="btn btn-ghost">Read the tutorial →</a>
+    </div>
+  </div>
+
+  <p class="section-label">Reference</p>
+  <div class="card-grid">
+    <a class="card" href="references/inputs.html">
+      <span class="card-icon">⚙️</span>
+      <h3>Inputs explained</h3>
+      <p>Every field, slider, and column in the calculator — what it means, what it affects, and any gotchas.</p>
+      <span class="card-link">Read →</span>
+    </a>
+    <a class="card" href="references/math.html">
+      <span class="card-icon">📐</span>
+      <h3>The math</h3>
+      <p>How projections are calculated, how compound interest works, and what the model's limitations are.</p>
+      <span class="card-link">Read →</span>
+    </a>
+    <a class="card" href="references/export-import.html">
+      <span class="card-icon">💾</span>
+      <h3>Export &amp; Import</h3>
+      <p>Save your plan to a file, reload it later, or share a starting point with someone else.</p>
+      <span class="card-link">Read →</span>
+    </a>
+    <a class="card" href="references/code.html">
+      <span class="card-icon">🔧</span>
+      <h3>Code walkthrough</h3>
+      <p>How the project is structured, how projections are computed in code, and how to fork or extend it.</p>
+      <span class="card-link">Read →</span>
+    </a>
+  </div>
+
+  <hr class="rule">
+
+  <p class="section-label">Tutorials</p>
+  <p style="font-size:15px; color:var(--ink-soft); margin: -8px 0 24px; max-width: 56ch;">Step-by-step walkthroughs for six different investor types — from a fresh graduate just starting out to a near-retirement investor preserving a large corpus.</p>
+  <a href="tutorials/index.html" class="btn btn-ghost">Browse all tutorials →</a>
+
+  <hr class="rule">
+
+  <div class="feature-strip">
+    <div class="feature-item">
+      <h4>No backend</h4>
+      <p>Everything runs client-side. Nothing you type is ever saved to a server or sent anywhere.</p>
+    </div>
+    <div class="feature-item">
+      <h4>Your assets, your rules</h4>
+      <p>Add, rename, or delete any asset class. Supports any currency and any return rate.</p>
+    </div>
+    <div class="feature-item">
+      <h4>Export &amp; share</h4>
+      <p>Save your plan as a JSON file. Reload it anytime or hand it to a friend as a starting point.</p>
+    </div>
+    <div class="feature-item">
+      <h4>Open source</h4>
+      <p>MIT licensed. Fork it, extend it, or host your own version for free on GitHub Pages or Vercel.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <p>This is a planning tool, not financial advice. Real returns will differ from projections. &nbsp;·&nbsp; <a href="../app/index.html">Open the calculator</a> &nbsp;·&nbsp; <a href="https://github.com/nilays-ns/portfolio-ledger" target="_blank" rel="noopener">GitHub</a></p>
+</footer>
+
+<script src="js/nav.js"></script>
+</body>
+</html>

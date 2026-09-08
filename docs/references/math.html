@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Math — Portfolio Ledger Docs</title>
+<meta name="description" content="How Portfolio Ledger calculates projections — compound interest, step-up contributions, inflation adjustment, and investment education.">
+<link rel="icon" type="image/svg+xml" href="../../app/favicon.svg">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">Portfolio Ledger</a>
+    <ul class="nav-links">
+      <li><a href="../index.html" class="active">Docs</a></li>
+      <li><a href="../tutorials/index.html">Tutorial</a></li>
+    </ul>
+    <div class="nav-ctas">
+      <a href="https://github.com/nilays-ns/portfolio-ledger" target="_blank" rel="noopener">GitHub ↗</a>
+      <a href="../../app/index.html" class="nav-cta-primary">Open app ↗</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Toggle navigation">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8">
+        <line x1="2" y1="5" x2="18" y2="5"/>
+        <line x1="2" y1="10" x2="18" y2="10"/>
+        <line x1="2" y1="15" x2="18" y2="15"/>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<div class="page-narrow">
+
+  <div class="breadcrumb">
+    <a href="../index.html">Docs</a>
+    <span>›</span>
+    The math
+  </div>
+
+  <h1 style="font-family:'Newsreader',serif;font-weight:500;font-size:36px;margin:0 0 12px;letter-spacing:-0.01em;">The math</h1>
+  <p style="font-size:17px;color:var(--ink-soft);margin:0 0 48px;max-width:52ch;">How projections are computed, where the numbers come from, and what the model cannot tell you.</p>
+
+  <hr class="rule" style="margin-top:0;">
+
+  <h2 class="doc-heading">Monthly compounding</h2>
+  <p class="prose">Each asset compounds monthly at the annual return rate you set. The monthly rate is derived from the annual rate using:</p>
+
+  <pre><code>monthly_rate = (1 + annual_rate) ^ (1/12) − 1</code></pre>
+
+  <p class="prose">This is the standard approach for monthly compounding — it accounts for the fact that interest earned mid-year also earns interest for the remaining months. Each month, every asset's balance is updated as:</p>
+
+  <pre><code>balance = balance × (1 + monthly_rate) + monthly_contribution</code></pre>
+
+  <p class="prose">The calculator steps through every month for the full projection horizon (up to the largest milestone year), updating all asset balances simultaneously.</p>
+
+  <h2 class="doc-heading">What CAGR means</h2>
+  <p class="prose">CAGR stands for Compound Annual Growth Rate. It is a single number that describes the rate at which an investment would have grown each year if it grew at a perfectly steady pace. It is a smoothed representation of what are actually bumpy, uneven returns.</p>
+
+  <p class="prose">For example: if an investment grows from ₹1,00,000 to ₹2,59,374 over 10 years, the CAGR is exactly 10% — even if some years returned 30% and others returned −15%.</p>
+
+  <pre><code>CAGR = (ending_value / starting_value) ^ (1 / years) − 1</code></pre>
+
+  <p class="prose">Portfolio Ledger uses the CAGR you enter as if it applies uniformly every single month. This is a simplification (see <a href="#limitations">Limitations</a> below).</p>
+
+  <h2 class="doc-heading">Contribution splitting</h2>
+  <p class="prose">Each month's total contribution is split across assets by the weights in the "% of monthly investment" column. The formula is:</p>
+
+  <pre><code>asset_contribution = monthly_total × (asset_weight / sum_of_all_weights)</code></pre>
+
+  <p class="prose">Because the weights are normalised, they don't need to add up to any specific number. Only their ratio matters. Once money is allocated to an asset it stays there — there is no rebalancing.</p>
+
+  <h2 class="doc-heading">Step-up contributions</h2>
+  <p class="prose">The step-up model works in two phases:</p>
+
+  <ol class="prose">
+    <li><strong>Flat period:</strong> For the first N years you set, the monthly contribution stays at the baseline amount.</li>
+    <li><strong>Step-up cycles:</strong> After the flat period, the contribution increases by the step-up percentage every M years, applied to the original baseline — not compounded on top of itself.</li>
+  </ol>
+
+  <p class="prose">The formula for the annual contribution in any given year is:</p>
+
+  <pre><code>if year ≤ flat_years:
+  annual = baseline × 12
+
+else:
+  cycle_index = floor((year − flat_years − 1) / cycle_years) + 1
+  annual = baseline × 12 × (1 + step_up_pct/100) ^ cycle_index</code></pre>
+
+  <p class="prose">For example, with a ₹25,000 baseline, flat for 5 years, then stepping up 10% every 2 years:</p>
+
+  <table class="doc-table">
+    <thead><tr><th>Years</th><th>Monthly contribution</th></tr></thead>
+    <tbody>
+      <tr><td>1–5</td><td>₹25,000</td></tr>
+      <tr><td>6–7</td><td>₹27,500 (+10%)</td></tr>
+      <tr><td>8–9</td><td>₹30,000 (+20%)</td></tr>
+      <tr><td>10–11</td><td>₹32,500 (+30%)</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="doc-heading">Inflation adjustment</h2>
+  <p class="prose">When "Show in today's money" is enabled, every projected future value is divided by a deflator based on the inflation rate you set:</p>
+
+  <pre><code>real_value = nominal_value / (1 + inflation_rate) ^ years</code></pre>
+
+  <p class="prose">This converts future rupees into today's purchasing power. A projected ₹1 Cr in 20 years at 6% inflation is equivalent to about ₹31.2 L in today's money — meaning it would buy roughly what ₹31.2 L buys today.</p>
+
+  <hr class="rule" id="asset-classes">
+
+  <h2 class="doc-heading">Historical return ranges by asset class</h2>
+  <p class="prose">The numbers below are historical long-run averages. Past returns do not guarantee future results. Use these as reference points when choosing return rates in the calculator — not as predictions.</p>
+
+  <div class="callout warn">
+    <strong>These are illustrative ranges, not recommendations.</strong> Actual returns depend on the specific instrument, time period, entry price, and macroeconomic conditions. Consult a SEBI-registered financial adviser before making investment decisions.
+  </div>
+
+  <table class="doc-table">
+    <thead>
+      <tr>
+        <th>Asset class</th>
+        <th>Historical CAGR range (India)</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Equity mutual funds (large-cap)</strong></td>
+        <td>10–14% over 10+ years</td>
+        <td>Nifty 50 long-run CAGR ~12–13%. Significant volatility year-to-year. Data: NSE India.</td>
+      </tr>
+      <tr>
+        <td><strong>Equity mutual funds (mid/small-cap)</strong></td>
+        <td>12–18% over 10+ years</td>
+        <td>Higher potential returns, higher volatility and drawdown risk.</td>
+      </tr>
+      <tr>
+        <td><strong>PPF (Public Provident Fund)</strong></td>
+        <td>7–8%</td>
+        <td>Government-guaranteed. Rate revised quarterly by Ministry of Finance. Tax-free returns. 15-year lock-in.</td>
+      </tr>
+      <tr>
+        <td><strong>EPF / PF (Employee Provident Fund)</strong></td>
+        <td>8–8.5%</td>
+        <td>EPFO-declared rate, typically 8.1–8.25% in recent years. Partially tax-free on withdrawal after 5 years.</td>
+      </tr>
+      <tr>
+        <td><strong>Fixed deposits (FDs)</strong></td>
+        <td>6–8%</td>
+        <td>Bank FD rates as of 2024–25. Interest fully taxable as income. Senior citizens typically get 0.5% extra.</td>
+      </tr>
+      <tr>
+        <td><strong>Government bonds / G-Secs</strong></td>
+        <td>6.5–7.5%</td>
+        <td>10-year G-Sec yield. Sovereign-guaranteed. Interest taxable.</td>
+      </tr>
+      <tr>
+        <td><strong>Gold</strong></td>
+        <td>9–12% over 20-year periods</td>
+        <td>Highly variable. Acts as a hedge but can underperform for extended stretches. Data: MCX / WGC India.</td>
+      </tr>
+      <tr>
+        <td><strong>Real estate</strong></td>
+        <td>6–10% (highly location-dependent)</td>
+        <td>Capital appreciation only — excludes rental yield. Illiquid. Transaction costs are significant.</td>
+      </tr>
+      <tr>
+        <td><strong>US equities (S&amp;P 500, for USD investors)</strong></td>
+        <td>~10% nominal USD CAGR over 30+ years</td>
+        <td>Historical long-run average. Add INR/USD depreciation (~2–3%/yr historically) for an Indian investor holding USD assets.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <hr class="rule" id="limitations">
+
+  <h2 class="doc-heading">Limitations of the model</h2>
+
+  <h3 class="doc-subheading">Constant return rate</h3>
+  <p class="prose">The calculator assumes your return rate is perfectly steady every single month. In reality, equity and gold returns are highly volatile — a year of −40% followed by +60% produces a very different outcome than two years of +10%, even though the average is the same. This is called <em>sequence-of-returns risk</em>, and it matters most when you are drawing down your portfolio (near or in retirement), not when you are accumulating.</p>
+
+  <h3 class="doc-subheading">No rebalancing</h3>
+  <p class="prose">Once money is allocated to an asset, it stays there. The calculator does not periodically shift money between assets to restore a target allocation. Most real portfolios involve some rebalancing, which can improve risk-adjusted returns but adds complexity the model doesn't capture.</p>
+
+  <h3 class="doc-subheading">No taxes</h3>
+  <p class="prose">The model does not account for capital gains tax, dividend distribution tax, or the tax treatment of EPF/PPF withdrawals. In practice, tax drag can reduce effective returns by 1–3% per year depending on the asset class and your income bracket.</p>
+
+  <h3 class="doc-subheading">No withdrawals or expenses</h3>
+  <p class="prose">The calculator models a pure accumulation phase. It does not model withdrawals (SWP, retirement drawdown) or expenses like fund management fees (expense ratios), though these are typically already reflected in the net NAV of mutual funds.</p>
+
+  <div class="page-nav">
+    <a href="inputs.html" class="prev">Inputs explained</a>
+    <a href="export-import.html" class="next">Export &amp; Import</a>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <p>This is a planning tool, not financial advice. &nbsp;·&nbsp; <a href="../../app/index.html">Open the calculator</a> &nbsp;·&nbsp; <a href="https://github.com/nilays-ns/portfolio-ledger" target="_blank" rel="noopener">GitHub</a></p>
+</footer>
+
+<script src="../js/nav.js"></script>
+</body>
+</html>

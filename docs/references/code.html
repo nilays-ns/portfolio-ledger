@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Code Walkthrough — Portfolio Ledger Docs</title>
+<meta name="description" content="How Portfolio Ledger is structured, how projections are computed in code, and how to fork or extend it.">
+<link rel="icon" type="image/svg+xml" href="../../app/favicon.svg">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">Portfolio Ledger</a>
+    <ul class="nav-links">
+      <li><a href="../index.html" class="active">Docs</a></li>
+      <li><a href="../tutorials/index.html">Tutorial</a></li>
+    </ul>
+    <div class="nav-ctas">
+      <a href="https://github.com/nilays-ns/portfolio-ledger" target="_blank" rel="noopener">GitHub ↗</a>
+      <a href="../../app/index.html" class="nav-cta-primary">Open app ↗</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Toggle navigation">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8">
+        <line x1="2" y1="5" x2="18" y2="5"/>
+        <line x1="2" y1="10" x2="18" y2="10"/>
+        <line x1="2" y1="15" x2="18" y2="15"/>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<div class="page-narrow">
+
+  <div class="breadcrumb">
+    <a href="../index.html">Docs</a>
+    <span>›</span>
+    Code walkthrough
+  </div>
+
+  <h1 style="font-family:'Newsreader',serif;font-weight:500;font-size:36px;margin:0 0 12px;letter-spacing:-0.01em;">Code walkthrough</h1>
+  <p style="font-size:17px;color:var(--ink-soft);margin:0 0 48px;max-width:52ch;">How the project is structured, how the projection engine works, and how to fork or extend it.</p>
+
+  <hr class="rule" style="margin-top:0;">
+
+  <h2 class="doc-heading">Project structure</h2>
+  <pre><code>app/
+  index.html    — all markup; no templating engine
+  css/
+    style.css   — all styles; CSS custom properties for theming
+  js/
+    app.js      — all logic: state, projections, chart, table, events
+  favicon.svg
+
+docs/           — this documentation site
+  index.html
+  references/
+  tutorials/
+  css/style.css
+  js/nav.js</code></pre>
+
+  <p class="prose">There is no build step, no bundler, no node_modules. The app is a single HTML file with one CSS file and one JS file. To run it locally, open <code>app/index.html</code> in any browser.</p>
+
+  <h2 class="doc-heading">app.js architecture</h2>
+  <p class="prose">The entire application is wrapped in an IIFE (immediately-invoked function expression) to avoid polluting the global scope:</p>
+
+  <pre><code>(function () {
+  // all state, logic, and DOM wiring lives here
+})();</code></pre>
+
+  <p class="prose">Inside the IIFE, the code is organised into these logical sections:</p>
+
+  <table class="doc-table">
+    <thead><tr><th>Section</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><strong>State</strong></td><td>A single <code>state</code> object holds all mutable data — sliders, milestone years, and the assets array. This is the single source of truth.</td></tr>
+      <tr><td><strong>Formatters</strong></td><td><code>inrFull()</code> and <code>inrCompact()</code> — format numbers into Indian-style currency strings (e.g., ₹12,34,567 or ₹12.35 L).</td></tr>
+      <tr><td><strong>Projection engine</strong></td><td><code>annualContribution()</code>, <code>contributedByYear()</code>, and <code>simulate()</code> — compute projections month-by-month.</td></tr>
+      <tr><td><strong>Table renderer</strong></td><td><code>renderTable()</code> — builds the asset rows from the state. Attaches inline event listeners for edits and deletions.</td></tr>
+      <tr><td><strong>Recalculate</strong></td><td><code>recalc()</code> — runs projections, updates milestone panels, updates the chart, and fills per-asset projected values in the table.</td></tr>
+      <tr><td><strong>Event wiring</strong></td><td>Slider <code>input</code> handlers, milestone year <code>input</code> handlers, add-asset button, import/export buttons, example loader, column resize handles, tooltip system.</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="doc-heading">The projection engine in detail</h2>
+
+  <h3 class="doc-subheading">annualContribution(year)</h3>
+  <pre><code>function annualContribution(year) {
+  var base = state.monthly * 12;
+  if (year <= state.flatYears) return base;
+  var cycleIndex = Math.floor((year - state.flatYears - 1) / state.cycleYears) + 1;
+  return base * Math.pow(1 + state.stepUpPct / 100, cycleIndex);
+}</code></pre>
+  <p class="prose">Returns the total annual contribution for a given year, applying the step-up schedule after the flat period. <code>cycleIndex</code> tells you how many step-up cycles have elapsed — 0 during the flat period, 1 during the first cycle, 2 during the second, and so on.</p>
+
+  <h3 class="doc-subheading">simulate(years, withContrib)</h3>
+  <pre><code>function simulate(years, withContrib) {
+  var balances = {};
+  state.assets.forEach(function (a) { balances[a.id] = parseFloat(a.value) || 0; });
+
+  var totalContribPct = state.assets.reduce(function (s, a) {
+    return s + (parseFloat(a.contribPct) || 0);
+  }, 0);
+
+  var series = [];
+  // ... month-by-month loop
+  for (var m = 1; m <= years * 12; m++) {
+    var year = Math.ceil(m / 12);
+    var monthlyTotal = withContrib ? annualContribution(year) / 12 : 0;
+
+    state.assets.forEach(function (a) {
+      var r = (parseFloat(a.rate) || 0) / 100;
+      var mRate = Math.pow(1 + r, 1 / 12) - 1;  // monthly rate from annual
+      var w = totalContribPct > 0 ? (parseFloat(a.contribPct) || 0) / totalContribPct : 0;
+      balances[a.id] = balances[a.id] * (1 + mRate) + monthlyTotal * w;
+    });
+
+    if (m % 12 === 0) {
+      // snapshot total at each year-end
+      series.push({ year: year, total: /* sum of balances */, byId: { ...balances } });
+    }
+  }
+  return series; // array of { year, total, byId }
+}</code></pre>
+
+  <p class="prose"><code>simulate()</code> is called twice on every recalc — once with <code>withContrib = true</code> (the "continuing to invest" scenario) and once with <code>withContrib = false</code> (the "stopped today" scenario). The returned <code>series</code> array is indexed by year: <code>series[5]</code> is the snapshot at year 5.</p>
+
+  <h2 class="doc-heading">How to fork the project</h2>
+
+  <ol class="steps">
+    <li>
+      <div class="step-body">
+        <p class="step-title">Clone or download the repo</p>
+        <p class="step-desc">Go to <a href="https://github.com/nilays-ns/portfolio-ledger" target="_blank" rel="noopener">github.com/nilays-ns/portfolio-ledger</a> and click "Fork" (GitHub) or "Code → Download ZIP".</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <p class="step-title">Open app/index.html in a browser</p>
+        <p class="step-desc">No install, no build. Just open the file. Edit <code>app/js/app.js</code> or <code>app/css/style.css</code> and reload to see changes.</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <p class="step-title">Deploy on Vercel or GitHub Pages</p>
+        <p class="step-desc">Connect the repo to Vercel (root directory = <code>app/</code>) or enable GitHub Pages from Settings → Pages → source: <code>app/</code> folder.</p>
+      </div>
+    </li>
+  </ol>
+
+  <h2 class="doc-heading">How to add a new column</h2>
+  <p class="prose">To add a new per-asset data column (e.g., "Current allocation %"):</p>
+
+  <ol class="prose">
+    <li>Add the field to the default asset object in the <code>state</code> declaration (e.g., <code>allocPct: 0</code>).</li>
+    <li>Add a <code>&lt;th&gt;</code> to the table header in <code>index.html</code>.</li>
+    <li>In <code>renderTable()</code>, add a new <code>&lt;td&gt;</code> with an input element and attach an <code>input</code> event listener that writes back to <code>a.allocPct</code> and calls <code>recalc()</code>.</li>
+    <li>If the column shows a computed value (not user input), update it inside <code>recalc()</code> by finding the row via <code>document.querySelector('[data-id="' + a.id + '"] .your-class')</code> and setting its <code>textContent</code>.</li>
+    <li>Update the export/import logic — the JSON serialiser in the export handler writes <code>state.assets</code> directly, so the new field is included automatically. The import handler maps the parsed JSON back to state; add a fallback (<code>a.allocPct || 0</code>) in case old files don't have the field.</li>
+  </ol>
+
+  <h2 class="doc-heading">How to change the currency</h2>
+  <p class="prose">The currency symbol is hardcoded in two formatter functions at the top of <code>app.js</code>:</p>
+
+  <pre><code>function inrFull(n) { ... return sign + '₹' + ...; }
+function inrCompact(n) { ... return sign + '₹' + ...; }</code></pre>
+
+  <p class="prose">Replace <code>'₹'</code> with your currency symbol. The Indian-style number grouping (e.g., 12,34,567) is in <code>inrFull()</code> — replace the regex <code>/\B(?=(\d{2})+(?!\d))/g</code> with <code>/\B(?=(\d{3})+(?!\d))/g</code> for Western-style grouping (1,234,567).</p>
+
+  <p class="prose">The compact formatter in <code>inrCompact()</code> uses Indian units (L = lakh = 10<sup>5</sup>, Cr = crore = 10<sup>7</sup>). Replace the thresholds and labels for other locales.</p>
+
+  <div class="page-nav">
+    <a href="export-import.html" class="prev">Export &amp; Import</a>
+    <span></span>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <p>This is a planning tool, not financial advice. &nbsp;·&nbsp; <a href="../../app/index.html">Open the calculator</a> &nbsp;·&nbsp; <a href="https://github.com/nilays-ns/portfolio-ledger" target="_blank" rel="noopener">GitHub</a></p>
+</footer>
+
+<script src="../js/nav.js"></script>
+</body>
+</html>

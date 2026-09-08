@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inputs Explained — Portfolio Ledger Docs</title>
+<meta name="description" content="Every field, slider, and column in Portfolio Ledger explained.">
+<link rel="icon" type="image/svg+xml" href="../../app/favicon.svg">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">Portfolio Ledger</a>
+    <ul class="nav-links">
+      <li><a href="../index.html" class="active">Docs</a></li>
+      <li><a href="../tutorials/index.html">Tutorial</a></li>
+    </ul>
+    <div class="nav-ctas">
+      <a href="https://github.com/nilays-ns/portfolio-ledger" target="_blank" rel="noopener">GitHub ↗</a>
+      <a href="../../app/index.html" class="nav-cta-primary">Open app ↗</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Toggle navigation">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8">
+        <line x1="2" y1="5" x2="18" y2="5"/>
+        <line x1="2" y1="10" x2="18" y2="10"/>
+        <line x1="2" y1="15" x2="18" y2="15"/>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<div class="page-narrow">
+
+  <div class="breadcrumb">
+    <a href="../index.html">Docs</a>
+    <span>›</span>
+    Inputs explained
+  </div>
+
+  <h1 style="font-family:'Newsreader',serif;font-weight:500;font-size:36px;margin:0 0 12px;letter-spacing:-0.01em;">Inputs explained</h1>
+  <p style="font-size:17px;color:var(--ink-soft);margin:0 0 48px;max-width:52ch;">Every field, slider, and column in the calculator — what it means, what it affects, and any gotchas worth knowing.</p>
+
+  <hr class="rule" style="margin-top:0;">
+
+  <h2 class="doc-heading">The asset table</h2>
+  <p class="prose">The table is the heart of the calculator. Each row represents one asset class — a bucket of money that grows at its own rate and receives a slice of your monthly contribution.</p>
+
+  <table class="doc-table">
+    <thead>
+      <tr>
+        <th style="width:160px;">Column</th>
+        <th>What it means</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Asset</strong></td>
+        <td>A free-text label. Name it whatever makes sense to you — "SIP / mutual funds", "Gold ETF", "Emergency fund", anything.</td>
+      </tr>
+      <tr>
+        <td><strong>Current value</strong></td>
+        <td>What this asset is worth today, right now, before any future growth or contributions. Enter the current market or surrender value in whatever currency you use.</td>
+      </tr>
+      <tr>
+        <td><strong>Return %/yr</strong></td>
+        <td>The annual growth rate you expect for this asset. The calculator compounds this monthly (see <a href="math.html">The math</a> for the exact formula). Use a realistic long-term average — not last year's number.</td>
+      </tr>
+      <tr>
+        <td><strong>% of monthly investment</strong></td>
+        <td>How your monthly contribution is split across assets. These are <em>relative weights</em>, not percentages — they don't need to add up to 100. If SIP gets 45 and Gold gets 5, SIP receives 90% of your monthly money and Gold receives 10%.</td>
+      </tr>
+      <tr>
+        <td><strong>In 5y / 10y / 25y</strong></td>
+        <td>The projected value of this asset at each milestone, given its return rate and its share of ongoing contributions. The milestone years are editable — click the number in the column header.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <strong>Tip:</strong> The "% of monthly investment" column is the most commonly misunderstood. If you set all assets to the same number (say, 10), contributions are split equally. The actual percentage that flows to each asset is <code>its weight ÷ sum of all weights</code>.
+  </div>
+
+  <h2 class="doc-heading">Contribution plan</h2>
+  <p class="prose">These sliders define how much money you put in each month and how that amount changes over time.</p>
+
+  <table class="doc-table">
+    <thead>
+      <tr>
+        <th style="width:200px;">Slider</th>
+        <th>What it means</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Monthly investment</strong></td>
+        <td>The amount you invest each month right now. This is the baseline contribution — it stays flat for the duration you set below, then steps up.</td>
+      </tr>
+      <tr>
+        <td><strong>Flat for the first … years</strong></td>
+        <td>How many years your monthly investment stays at the baseline amount before the step-up kicks in. Set to 0 if you want to start stepping up immediately.</td>
+      </tr>
+      <tr>
+        <td><strong>Then step up every … years</strong></td>
+        <td>How often the contribution increases. A value of 2 means contributions increase every two years after the flat period ends.</td>
+      </tr>
+      <tr>
+        <td><strong>Step-up amount</strong></td>
+        <td>How much the contribution grows each cycle, expressed as a percentage of the original baseline. A 10% step-up on a ₹25,000 baseline adds ₹2,500 per cycle — so after the first cycle it's ₹27,500, after the second ₹30,000, and so on.</td>
+      </tr>
+      <tr>
+        <td><strong>Inflation (for real terms)</strong></td>
+        <td>The annual inflation rate used when the "Show in today's money" toggle is on. Has no effect on projections when the toggle is off.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 class="doc-heading">Milestone years</h2>
+  <p class="prose">The three "In X years" panels at the top of the page show your projected total portfolio value at three points in the future. You can change any of the three year values by clicking the number directly in the panel — the calculator updates immediately.</p>
+
+  <p class="prose">Each panel also shows the breakdown: how much you will have contributed in total and how much of the final value is pure growth.</p>
+
+  <h2 class="doc-heading">The chart</h2>
+  <p class="prose">The chart plots two scenarios side by side:</p>
+
+  <ul class="prose">
+    <li><strong>Continuing to invest</strong> (green line) — what your portfolio looks like if you keep contributing according to your plan.</li>
+    <li><strong>If you stopped investing today</strong> (dashed line) — what your existing portfolio would be worth if you made no further contributions, with only compound growth.</li>
+  </ul>
+
+  <p class="prose">The gap between the two lines is the value of your ongoing contributions. The larger the gap, the more your future contributions matter relative to what you have today.</p>
+
+  <h2 class="doc-heading">Inflation toggle</h2>
+  <p class="prose">When "Show in today's money" is checked, all projected values are deflated by the inflation rate you set. A ₹1 Cr projection 20 years from now at 6% inflation is shown as roughly ₹31 L in today's purchasing power. This lets you compare future values against your current cost of living rather than raw nominal numbers.</p>
+
+  <div class="callout warn">
+    <strong>Note:</strong> The inflation adjustment applies to the displayed numbers only — it does not change the underlying return rates or the projection model. The chart and milestone values switch between nominal and real views together when you toggle the checkbox.
+  </div>
+
+  <h2 class="doc-heading">Load example / Import / Export</h2>
+  <table class="doc-table">
+    <thead>
+      <tr><th>Button</th><th>What it does</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Load an example</strong></td>
+        <td>Replaces the current table with a pre-filled example portfolio (₹50,000/month, 6 asset classes). Useful for exploring the tool before entering your own numbers.</td>
+      </tr>
+      <tr>
+        <td><strong>Import</strong></td>
+        <td>Opens a file picker. Select a <code>.json</code> file previously exported from Portfolio Ledger to restore that plan exactly.</td>
+      </tr>
+      <tr>
+        <td><strong>Export</strong></td>
+        <td>Downloads your current plan as a <code>.json</code> file. Use this to save your work or share a starting point with someone else. See <a href="export-import.html">Export &amp; Import</a> for the file format.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="page-nav">
+    <span></span>
+    <a href="math.html" class="next">The math</a>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <p>This is a planning tool, not financial advice. &nbsp;·&nbsp; <a href="../../app/index.html">Open the calculator</a> &nbsp;·&nbsp; <a href="https://github.com/nilays-ns/portfolio-ledger" target="_blank" rel="noopener">GitHub</a></p>
+</footer>
+
+<script src="../js/nav.js"></script>
+</body>
+</html>
